@@ -209,7 +209,7 @@ fs_write_superblock(filesys_incore_t* fs_incore)
     object_t* fs_obj = fs_incore->fs_obj;
     fs_obj->obj_magic = FS_OBJ_MAGIC;
     fs_obj->obj_acc_sz = sizeof(filesys_t);
-    fs_obj->obj_free_sz = OBJ_SIZE - sizeof(object_t) + obj->obj_acc_sz;
+    fs_obj->obj_free_sz = OBJ_SZ - sizeof(object_t) + obj->obj_acc_sz;
     return fs_write_object(fs_incore->fs_fd, fs_obj, OBJ_SZ);
 }
 
@@ -267,7 +267,7 @@ fs_create_or_mount_fs(unsigned long long size)
         fs_disk->fs_min_file_sz = BLOCK_SIZE;
         fs_disk->fs_udata_sz = fs->fs_disk->fs_size_in_bytes;
         fs_disk->fs_magic = FS_MAGIC;
-        fs_disk->fs_total_obj = fs_disk->fs_size_in_bytes / OBJ_SIZE;
+        fs_disk->fs_total_obj = fs_disk->fs_size_in_bytes / OBJ_SZ;
     } else {
         fs_read_superblock(fs);
         if (fs_check_fs(fs_disk) < 0) {
