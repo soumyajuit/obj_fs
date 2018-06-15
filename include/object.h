@@ -15,15 +15,18 @@ class object_c {
             unsigned int    obj_sz;
             unsigned int    obj_acc_sz;
             unsigned int    obj_free;
-            unsigned char   obj_data[];
+            unsigned char*  obj_data;
         } obj_internal;
 
     public:
+        const unsigned char*  get_obj_data();
+        int     read_obj(const device dev);
+        int     write_obj(const device dev);
         bool    obj_sanity_check();
-        int     read_obj();
-        int     write_obj();
-        int     to_buffer();
-        int     from_buffer();
-}
+        int     to_buffer(char* buffer);
+        int     from_buffer(const char* buffer);
+};
+
+typedef object_c object;
 
 #endif
